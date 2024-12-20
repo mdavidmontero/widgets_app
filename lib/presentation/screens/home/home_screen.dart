@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
       title: const Text('Flutter Widgets'),
     ),
     
-    body: _HomeView(),
+    body: const _HomeView(),
     );
     
   }
@@ -27,7 +27,7 @@ class _HomeView extends StatelessWidget {
       itemCount: appMenuItems.length,
       itemBuilder: (context, index) {
         final item = appMenuItems[index];
-        return _CustomListTitle(item: item);
+        return _CustomListTitle(menuItem: item);
       },
 
       
@@ -37,22 +37,22 @@ class _HomeView extends StatelessWidget {
 
 class _CustomListTitle extends StatelessWidget {
   const _CustomListTitle({
-    required this.item,
+    required this.menuItem,
   });
 
-  final MenuItem item;
+  final MenuItem menuItem;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return ListTile(
       trailing: const Icon(Icons.arrow_forward_ios_rounded),
-      title: Text(item.title),
+      title: Text(menuItem.title),
     
-      subtitle: Text(item.subTitle),
-      leading: Icon(item.icon, color: colors.primary,),
+      subtitle: Text(menuItem.subTitle),
+      leading: Icon(menuItem.icon, color: colors.primary,),
       onTap: () {
-        // Todo: navegar a otra pantalla
+       Navigator.pushNamed(context,menuItem.link );
       },
 
       
