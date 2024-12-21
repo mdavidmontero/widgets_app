@@ -26,7 +26,9 @@ final slides = <SlideInfo>[
 ];
 
 class AppTutorialScreen extends StatefulWidget {
+
   static const name = 'tutorial_screen';
+
   const AppTutorialScreen({super.key});
 
   @override
@@ -34,6 +36,7 @@ class AppTutorialScreen extends StatefulWidget {
 }
 
 class _AppTutorialScreenState extends State<AppTutorialScreen> {
+
   final PageController pageviewController = PageController();
   bool endReached = false;
 
@@ -41,22 +44,26 @@ class _AppTutorialScreenState extends State<AppTutorialScreen> {
   void initState() {
     super.initState();
 
-    pageviewController.addListener((){
-        final page = pageviewController.page?? 0;
-        if(!endReached && page >= slides.length - 1){
-          setState(() {
-            endReached = true;
-          });
-        }
+    pageviewController.addListener(() {
+
+      final page = pageviewController.page ?? 0;
+      if ( !endReached && page >= (slides.length - 1.5) ) {
+        setState(() {
+          endReached = true;
+        });
+      }
+
     });
+
   }
 
   @override
   void dispose() {
     pageviewController.dispose();
-    super.dispose();
 
+    super.dispose();
   }
+
 
 
   @override
@@ -65,7 +72,8 @@ class _AppTutorialScreenState extends State<AppTutorialScreen> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-         PageView(
+
+          PageView(
             controller: pageviewController,
             physics: const BouncingScrollPhysics(),
             children: slides.map(
@@ -76,12 +84,18 @@ class _AppTutorialScreenState extends State<AppTutorialScreen> {
               )
             ).toList(),
           ),
-          Positioned(child: TextButton(onPressed: () {
-            
-          }, child: const Text("Salir"))),
+
+          Positioned(
+            right: 20,
+            top: 50,
+            child: TextButton(
+              child: const Text('Salir'),
+              onPressed: () => context.pop(),
+            )
+          ),
 
           endReached ? 
-           Positioned(
+            Positioned(
               bottom: 30,
               right: 30,
               child: FadeInRight(
@@ -93,22 +107,30 @@ class _AppTutorialScreenState extends State<AppTutorialScreen> {
                 ),
               )
             ): const SizedBox(),
+
         ],
       ),
+
     );
   }
 }
 
+
 class _Slide extends StatelessWidget {
+
   final String title;
   final String caption;
   final String imageUrl;
 
-  const _Slide(
-      {required this.title, required this.caption, required this.imageUrl});
+  const _Slide({
+    required this.title, 
+    required this.caption, 
+    required this.imageUrl
+  });
 
   @override
   Widget build(BuildContext context) {
+
     final titleStyle = Theme.of(context).textTheme.titleLarge;
     final captionStyle = Theme.of(context).textTheme.bodySmall;
 
@@ -119,17 +141,12 @@ class _Slide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image(image: AssetImage(imageUrl)),
-            const SizedBox(height: 20),
-            Text(
-              title,
-              style: titleStyle,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              caption,
-              style: captionStyle,
-            ),
+            Image( image: AssetImage( imageUrl )),
+            const SizedBox(height: 20 ),
+            Text( title, style: titleStyle, ),
+            const SizedBox(height: 10 ),
+            Text( caption, style: captionStyle, ),
+
           ],
         ),
       ),

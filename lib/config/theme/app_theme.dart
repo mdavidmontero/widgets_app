@@ -17,16 +17,22 @@ class AppTheme {
   final int selectedColor;
   final bool isDarkMode;
 
-  AppTheme( {this.selectedColor = 0,this.isDarkMode= false})
+  AppTheme({this.selectedColor = 0, this.isDarkMode = false})
       : assert(selectedColor >= 0, 'selected color must be greather then 0'),
         assert(selectedColor < colorList.length,
             'selected color must be less then colorList.length');
   ThemeData getTheme() => ThemeData(
-        useMaterial3: true,
-        brightness: isDarkMode ? Brightness.dark : Brightness.light,
-        colorSchemeSeed: colorList[selectedColor],
-        appBarTheme: const AppBarTheme(
-          centerTitle: false
-        )
+      useMaterial3: true,
+      brightness: isDarkMode ? Brightness.dark : Brightness.light,
+      colorSchemeSeed: colorList[selectedColor],
+      appBarTheme: const AppBarTheme(centerTitle: false));
+
+  AppTheme copyWith({
+    int? selectedColor,
+    bool? isDarkMode,
+  }) =>
+      AppTheme(
+        selectedColor: selectedColor ?? this.selectedColor,
+        isDarkMode: isDarkMode ?? this.isDarkMode,
       );
 }
